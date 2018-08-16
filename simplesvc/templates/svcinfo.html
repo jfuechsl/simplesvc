@@ -1,0 +1,60 @@
+<!doctype html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+  <title>Simple Service</title>
+</head>
+<body>
+  <div class="pure-g">
+    <div class="pure-u-1-3"></div>
+    <div class="pure-u-1-3">
+      <h3>Mounted volumes</h3>
+      {% if mounts|length > 0 %}
+      <table class="pure-table">
+        <thead><th>#</th><th>Mountpoint</th></thead>
+        <tbody>
+          {% for mountpoint in mounts %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ mountpoint }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p>No mounts detected.</p>
+      {% endif %}
+      <h3>Environment variables (starting with EY_)</h3>
+      {% if env_vars|length > 0 %}
+      <div>
+        <table class="pure-table">
+          <thead><th>Name</th><th>Value</th></thead>
+          <tbody>
+            {% for env_var in env_vars %}
+            <tr>
+              <td>{{ env_var[0] }}</td>
+              <td>{{ env_var[1][0:25] }}{% if env_var[1]|length > 24 %}...{% endif %}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p>No environment variables detected.</p>
+      {% endif %}
+      <h3>Comic of the day</h3>
+      {% if xkcd['success'] %}
+      <h4>{{xkcd['data']['title']}} (#{{xkcd['data']['num']}})</h4>
+      <img src="{{xkcd['data']['img']}}" title="{{xkcd['data']['alt']}}" />
+      {% else %}
+      <p>No comic today! 😤</p>
+      {% endif %}
+    </div>
+    <div class="pure-u-1-3"></div>
+  </div>
+</body>
+</html>
